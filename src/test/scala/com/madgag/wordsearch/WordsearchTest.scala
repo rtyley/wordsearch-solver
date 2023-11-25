@@ -36,9 +36,29 @@ class WordsearchTest extends AnyFlatSpec with Matchers {
 
     wordsearch.describe shouldBe "15 x 15"
     wordsearch.contains("DIMINUENDO") shouldBe true
-    println(wordsearch.highlight(wordsearch.find("ARTICULATION")))
 
-    given dictionary: Dictionary = Dictionary.systemDict.withWordsLongerThan(6)
+    given dictionary: Dictionary = Dictionary(Seq(
+      "PITCH",
+      "TREBLE",
+      "BASS",
+      "TEMPO",
+      "TEXTURE",
+      "THIN",
+      "SILENCE",
+      "RESTS",
+      "DYNAMICS",
+      "CRESENDO",
+      "DIMINUENDO",
+      "DECRESENDO",
+      "DURATION",
+      "LONG",
+      "SHORT",
+      "SONORITY",
+      "TIMBRE",
+      "ARTICULATION",
+      "LEGATO",
+      "STACCATO"
+    ))
 
     println(s"Searching with ${dictionary.words.size} words")
     println(wordsearch.highlight(wordsearch.findWords.values.flatten.toSet))
