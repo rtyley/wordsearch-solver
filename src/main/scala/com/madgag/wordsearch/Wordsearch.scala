@@ -38,11 +38,15 @@ case class Wordsearch(chars: Seq[Seq[Char]]) {
 
   def contains(word: String): Boolean = find(word).nonEmpty
 
-  def highlight(lines: Set[Line]): Seq[String] = for (y <- 0 until height) yield (for x <- 0 until width yield {
+  def findWords(using dictionary: Dictionary): Map[String, Set[Line]] = (for {
+    word <- dictionary.words
+  } yield word -> find(word)).toMap
+
+  def highlight(lines: Set[Line]): String = (for (y <- 0 until height) yield (for x <- 0 until width yield {
     val coord = Coord(x, y)
     val highlight = lines.exists(_.coords.contains(coord))
     if (highlight) fansi.Color.LightGreen(chars(y)(x).toString) else fansi.Color.DarkGray(chars(y)(x).toString)
-  }).reduce(_ ++ _).toString
+  }).reduce(_ ++ _).toString).mkString("\n")
 }
 
 object Wordsearch {
